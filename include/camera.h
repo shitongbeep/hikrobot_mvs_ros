@@ -27,8 +27,8 @@ class Camera {
   std::string SerialNumber = "";
   int32_t CameraMode;  // 0: USB3 Camera; 1: IP Camera
 
-  int32_t width;
-  int32_t height;
+  int32_t Width;
+  int32_t Height;
   int32_t OffsetX;
   int32_t OffsetY;
 

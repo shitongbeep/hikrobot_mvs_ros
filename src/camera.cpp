@@ -9,6 +9,11 @@ Camera::Camera(ros::NodeHandle& nh) {
   // set param from yaml
   nh.param("SerialNumber", SerialNumber, std::string());
 
+  nh.param("Width", Width, -1);
+  nh.param("Height", Height, -1);
+  nh.param("OffsetX", OffsetX, 0);
+  nh.param("OffsetY", OffsetY, 0);
+
   nh.param("TriggerEnable", TriggerEnable, false);
   nh.param("FrameRate", FrameRate, 10);
   nh.param("TriggerMode", TriggerMode, 1);
@@ -100,6 +105,44 @@ Camera::Camera(ros::NodeHandle& nh) {
 }
 
 bool Camera::SetCamera() {
+  // set Image Size
+  if (Height > 0) {
+    nRet = MV_CC_SetIntValue(handle, "Height", Height);
+    if (MV_OK == nRet) {
+      ROS_INFO("Set Image Height: %d\n", Height);
+    } else {
+      ROS_WARN("Set Image Height: %d\n Fail", Height);
+      return false;
+    }
+  }
+  if (Width > 0) {
+    nRet = MV_CC_SetIntValue(handle, "Width", Width);
+    if (MV_OK == nRet) {
+      ROS_INFO("Set Image Width: %d\n", Width);
+    } else {
+      ROS_WARN("Set Image Width: %d\n Fail", Width);
+      return false;
+    }
+  }
+  if (OffsetX > 0) {
+    nRet = MV_CC_SetIntValue(handle, "OffsetX", OffsetX);
+    if (MV_OK == nRet) {
+      ROS_INFO("Set Image OffsetX: %d\n", OffsetX);
+    } else {
+      ROS_WARN("Set Image OffsetX: %d\n Fail", OffsetX);
+      return false;
+    }
+  }
+  if (OffsetY > 0) {
+    nRet = MV_CC_SetIntValue(handle, "OffsetY", OffsetY);
+    if (MV_OK == nRet) {
+      ROS_INFO("Set Image OffsetY: %d\n", OffsetY);
+    } else {
+      ROS_WARN("Set Image OffsetY: %d\n Fail", OffsetY);
+      return false;
+    }
+  }
+
   // set Trigger Mode
   if (TriggerEnable) {
     ROS_INFO("Setting Hard Trigger Mode ...\n");

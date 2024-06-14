@@ -2,6 +2,11 @@ SerialNumber: ""
 
 TopicName: "/camera/image"
 
+Width: -1 # -1 default
+Height: -1 # -1 default
+OffsetX: 0
+OffsetY: 0
+
 # Exposure Auto, 0 stands for Off, 1 stands for Once, 2 stands for Continues
 ExposureAutoMode: 2
 ExposureTime: 5000
