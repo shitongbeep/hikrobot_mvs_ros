@@ -125,7 +125,7 @@ void* WorkThread(void* cam_handel) {
       srcImage =
           cv::Mat(stImageInfo.nHeight, stImageInfo.nWidth, CV_8UC3, pData);
       sensor_msgs::ImagePtr msg =
-          cv_bridge::CvImage(std_msgs::Header(), "rgb8", srcImage).toImageMsg();
+          cv_bridge::CvImage(std_msgs::Header(), "bgr8", srcImage).toImageMsg();
 
       // sync camera with lidar
       if (!liv_sync) {
