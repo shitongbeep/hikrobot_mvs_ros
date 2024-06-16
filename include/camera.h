@@ -55,6 +55,8 @@ class Camera {
 
   bool SaturationEnable;
   int32_t Saturation;
+
+  int32_t SubSample = 1;
 };
 
 }  // namespace mvs_camera

@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
   ROS_WARN("Getting First RGB Image...\n");
 
   memset(&stImageInfo, 0, sizeof(MV_FRAME_OUT_INFO_EX));
-  hik_camera.nRet = MV_CC_GetImageForBGR(hik_camera.handle, pData, stParam.nCurValue, &stImageInfo, 100);
+  hik_camera.nRet = MV_CC_GetImageForBGR(hik_camera.handle, pData, stParam.nCurValue, &stImageInfo, 10000);
   if (MV_OK != hik_camera.nRet) {
     ROS_ERROR("No data");
     std::free(pData);
@@ -117,7 +117,7 @@ void* WorkThread(void* cam_handel) {
   int64_t last_image_time_ns = 0;
   while (ros::ok()) {
     memset(&stImageInfo, 0, sizeof(MV_FRAME_OUT_INFO_EX));
-    nRet = MV_CC_GetImageForBGR(cam_handel, pData, nDataSize, &stImageInfo, 1000);
+    nRet = MV_CC_GetImageForBGR(cam_handel, pData, nDataSize, &stImageInfo, 10000);
     if (nRet == MV_OK) {
       ROS_WARN("Get RGB Image Size [%d, %d]...\n", stImageInfo.nHeight, stImageInfo.nWidth);
       // convert data to image

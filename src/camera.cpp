@@ -32,6 +32,8 @@ Camera::Camera(ros::NodeHandle& nh) {
   nh.param("SaturationEnable", SaturationEnable, true);
   nh.param("Saturation", Saturation, 128);
 
+  nh.param("SubSample", SubSample, 1);
+
   //********** 枚举设备 ********************************/
   MV_CC_DEVICE_INFO_LIST stDeviceList;
   memset(&stDeviceList, 0, sizeof(MV_CC_DEVICE_INFO_LIST));
@@ -141,6 +143,14 @@ bool Camera::SetCamera() {
       ROS_WARN("Set Image OffsetY: %d\n Fail", OffsetY);
       return false;
     }
+  }
+  nRet = MV_CC_SetEnumValue(handle, "BinningHorizontal", SubSample);
+  nRet = MV_CC_SetEnumValue(handle, "BinningVertical", SubSample);
+  if (MV_OK == nRet) {
+    ROS_INFO("Set Image Sub Sample: %d\n", SubSample);
+  } else {
+    ROS_WARN("Set Image Sub Sample: %d Fail! nRet [%x]\n", SubSample, nRet);
+    return false;
   }
 
   // set Trigger Mode
